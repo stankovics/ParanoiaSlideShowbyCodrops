@@ -1,0 +1,27 @@
+{
+  "name": "recreating-paranoiaslideshow-by-codrops",
+  "version": "1.0.0",
+  "description": "Used for learning purpose",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel src/index.html --open",
+    "build": "npm run clean && npm run build:parcel"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stankovics/ParanoiaSlideShowbyCodrops.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/stankovics/ParanoiaSlideShowbyCodrops/issues"
+  },
+  "homepage": "https://github.com/stankovics/ParanoiaSlideShowbyCodrops#readme",
+  "devDependencies": {
+    "parcel": "^2.3.2"
+  },
+  "dependencies": {
+    "gsap": "^3.9.1",
+    "imagesloaded": "^5.0.0"
+  }
+}
