@@ -1,6 +1,6 @@
-# ParanoiaSlideShowbyCodrops
+# Paranoia Slideshow By Codrops
 
-Used for learning purpose
+<span style="color:red">Used for learning purpose<span>
 
 # Paranoia Slideshow
 
