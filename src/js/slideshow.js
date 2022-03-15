@@ -28,7 +28,7 @@ export class Slideshow {
   filterAnimation = true;
 
   constructor(DOM_el, options = {}) {
-    this.DOM_el = DOM_el;
+    this.DOM.el = DOM_el;
 
     // Some options
     this.duration =
@@ -48,4 +48,20 @@ export class Slideshow {
 
     this.slidesTotal = this.DOM.slides.length;
   }
+
+  /**
+   * Set the current slide
+   * @param {number} position - The position of slide.
+   */
+  setInitialSlide(position = this.current) {
+    // Update current
+    this.current = position;
+    // The current slide
+    this.currentSlide = this.slidesArr[this.current];
+    // Set current image
+    this.DOM.slides[this.current].classList.add('slides__img--current');
+  }
+  /**
+   * Navigate the slideshow to the next slide
+   */
 }
