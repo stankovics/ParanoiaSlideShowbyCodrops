@@ -555,6 +555,11 @@ const titleElems = [
 // Preload images then remove loader (loading class)
 _utils.preloadImages('.slides__img-inner').then(()=>bodyEl.classList.remove('loading')
 );
+// Set the current slide
+slideshowMain.setInitialSlide();
+// Setup the current slide values for the navigation elements, which are based on the slideshowMain's current value
+slidesshowNavPrev.setInitialSlide(slideshowMain.current ? slideshowMain.current - 1 : slideshowMain.slidesTotal - 1);
+slideshowNavNext.setInitialSlide(slideshowMain.current < slideshowMain.slidesTotal - 1 ? slideshowMain.current + 1 : 0);
 
 },{"gsap":"fPSuC","./slideshow":"ao8JN","./utils":"72Dku","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fPSuC":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
