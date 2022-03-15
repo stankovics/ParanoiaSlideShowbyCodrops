@@ -1,4 +1,5 @@
 import gsap from 'gsap';
+import { Slideshow } from './slideshow';
 import { preloadImages } from './utils';
 
 // Body element
@@ -12,8 +13,29 @@ const bodyEl = document.body;
  * */
 const bodyColor = getComputedStyle(bodyEl).getPropertyValue('--color-bg');
 
+// Three Slideshow instances: main, and two for the navigation items
+const slideshowMain = new Slideshow(
+  document.querySelector('.slideshow > div.slides')
+);
+const slideshowNavNext = new Slideshow(
+  document.querySelector('.slideshow nav.nav--next .slides'),
+  { duration: 1, filterAnimation: false }
+);
+const slidesshowNavPrev = new Slideshow(
+  document.querySelector('.slideshow nav.nav--prev .slides'),
+  { duration: 1, filterAnimation: false }
+);
+// Nav controlos to navigate the main slideshow
+const navCtrls = {
+  prev: document.querySelector('.slideshow nav.nav--prev'),
+  next: document.querySelector('.slideshow nav.nav--next'),
+};
+
+// Title elements
+const titleElems = [
+  ...document.querySelectorAll('.meta__content > .meta__content-title'),
+];
 // Preload images then remove loader (loading class)
 preloadImages('.slides__img-inner').then(() =>
   bodyEl.classList.remove('loading')
 );
-// Nav controls object to navigate the main slideshow
