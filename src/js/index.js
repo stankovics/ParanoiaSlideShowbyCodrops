@@ -17,6 +17,7 @@ const bodyColor = getComputedStyle(bodyEl).getPropertyValue('--color-bg');
 const slideshowMain = new Slideshow(
   document.querySelector('.slideshow > div.slides')
 );
+console.log(slideshowMain);
 const slideshowNavNext = new Slideshow(
   document.querySelector('.slideshow nav.nav--next .slides'),
   { duration: 1, filterAnimation: false }
@@ -35,6 +36,31 @@ const navCtrls = {
 const titleElems = [
   ...document.querySelectorAll('.meta__content > .meta__content-title'),
 ];
+
+// Animates the body color
+const animatedBodyBGColor = () => {
+  gsap
+    .timeline()
+    .to(
+      bodyEl,
+      {
+        duration: slideshowMain.duration / 2,
+        ease: 'power3.in',
+        backgroundColor: '#2b0889',
+      },
+      'start'
+    )
+    .to(
+      bodyEl,
+      {
+        duration: slideshowMain.duration,
+        ease: 'power3',
+        backgroundColor: bodyColor,
+      },
+      'start+=' + slideshowMain.duration / 2
+    );
+};
+
 // Preload images then remove loader (loading class)
 preloadImages('.slides__img-inner').then(() =>
   bodyEl.classList.remove('loading')
@@ -52,3 +78,4 @@ slideshowNavNext.setInitialSlide(
     ? slideshowMain.current + 1
     : 0
 );
+// Set initial title

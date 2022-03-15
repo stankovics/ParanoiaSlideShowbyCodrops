@@ -535,6 +535,7 @@ const bodyEl = document.body;
  * */ const bodyColor = getComputedStyle(bodyEl).getPropertyValue('--color-bg');
 // Three Slideshow instances: main, and two for the navigation items
 const slideshowMain = new _slideshow.Slideshow(document.querySelector('.slideshow > div.slides'));
+console.log(slideshowMain);
 const slideshowNavNext = new _slideshow.Slideshow(document.querySelector('.slideshow nav.nav--next .slides'), {
     duration: 1,
     filterAnimation: false
@@ -552,6 +553,18 @@ const navCtrls = {
 const titleElems = [
     ...document.querySelectorAll('.meta__content > .meta__content-title'), 
 ];
+// Animates the body color
+const animatedBodyBGColor = ()=>{
+    _gsapDefault.default.timeline().to(bodyEl, {
+        duration: slideshowMain.duration / 2,
+        ease: 'power3.in',
+        backgroundColor: '#2b0889'
+    }, 'start').to(bodyEl, {
+        duration: slideshowMain.duration,
+        ease: 'power3',
+        backgroundColor: bodyColor
+    }, 'start+=' + slideshowMain.duration / 2);
+};
 // Preload images then remove loader (loading class)
 _utils.preloadImages('.slides__img-inner').then(()=>bodyEl.classList.remove('loading')
 );
@@ -559,7 +572,7 @@ _utils.preloadImages('.slides__img-inner').then(()=>bodyEl.classList.remove('loa
 slideshowMain.setInitialSlide();
 // Setup the current slide values for the navigation elements, which are based on the slideshowMain's current value
 slidesshowNavPrev.setInitialSlide(slideshowMain.current ? slideshowMain.current - 1 : slideshowMain.slidesTotal - 1);
-slideshowNavNext.setInitialSlide(slideshowMain.current < slideshowMain.slidesTotal - 1 ? slideshowMain.current + 1 : 0);
+slideshowNavNext.setInitialSlide(slideshowMain.current < slideshowMain.slidesTotal - 1 ? slideshowMain.current + 1 : 0); // Set initial title
 
 },{"gsap":"fPSuC","./slideshow":"ao8JN","./utils":"72Dku","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fPSuC":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
