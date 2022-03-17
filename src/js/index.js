@@ -78,4 +78,6 @@ slideshowNavNext.setInitialSlide(
     ? slideshowMain.current + 1
     : 0
 );
+console.log(titleElems);
 // Set initial title
+gsap.set(titleElems[slideshowMain.current], { opacity: 1 });
