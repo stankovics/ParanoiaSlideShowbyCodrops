@@ -572,7 +572,12 @@ _utils.preloadImages('.slides__img-inner').then(()=>bodyEl.classList.remove('loa
 slideshowMain.setInitialSlide();
 // Setup the current slide values for the navigation elements, which are based on the slideshowMain's current value
 slidesshowNavPrev.setInitialSlide(slideshowMain.current ? slideshowMain.current - 1 : slideshowMain.slidesTotal - 1);
-slideshowNavNext.setInitialSlide(slideshowMain.current < slideshowMain.slidesTotal - 1 ? slideshowMain.current + 1 : 0); // Set initial title
+slideshowNavNext.setInitialSlide(slideshowMain.current < slideshowMain.slidesTotal - 1 ? slideshowMain.current + 1 : 0);
+console.log(titleElems);
+// Set initial title
+_gsapDefault.default.set(titleElems[slideshowMain.current], {
+    opacity: 1
+});
 
 },{"gsap":"fPSuC","./slideshow":"ao8JN","./utils":"72Dku","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fPSuC":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
