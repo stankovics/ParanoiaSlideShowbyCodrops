@@ -11,34 +11,32 @@ const bodyEl = document.body;
  * getPropertyValue() method gets value from CSSStyleDeclaration object.
  * In this case we are getting value of css variable --color-bg,  that is #4000EA;
  * */
-const bodyColor = getComputedStyle(bodyEl).getPropertyValue('--color-bg');
 
+const bodyColor = getComputedStyle(bodyEl).getPropertyValue('--color-bg');
 // Three Slideshow instances: main, and two for the navigation items
 const slideshowMain = new Slideshow(
   document.querySelector('.slideshow > div.slides')
 );
-console.log(slideshowMain);
 const slideshowNavNext = new Slideshow(
   document.querySelector('.slideshow nav.nav--next .slides'),
-  { duration: 1, filterAnimation: false }
+  { duration: 1, filtersAnimation: false }
 );
-const slidesshowNavPrev = new Slideshow(
+const slideshowNavPrev = new Slideshow(
   document.querySelector('.slideshow nav.nav--prev .slides'),
-  { duration: 1, filterAnimation: false }
+  { duration: 1, filtersAnimation: false }
 );
-// Nav controlos to navigate the main slideshow
+// Nav controls to navigate the main slideshow
 const navCtrls = {
   prev: document.querySelector('.slideshow nav.nav--prev'),
   next: document.querySelector('.slideshow nav.nav--next'),
 };
-
-// Title elements
+// title elements
 const titleElems = [
   ...document.querySelectorAll('.meta__content > .meta__content-title'),
 ];
 
 // Animates the body color
-const animatedBodyBGColor = () => {
+const animateBodyBGColor = () => {
   gsap
     .timeline()
     .to(
@@ -61,14 +59,10 @@ const animatedBodyBGColor = () => {
     );
 };
 
-// Preload images then remove loader (loading class)
-preloadImages('.slides__img-inner').then(() =>
-  bodyEl.classList.remove('loading')
-);
 // Set the current slide
 slideshowMain.setInitialSlide();
-// Setup the current slide values for the navigation elements, which are based on the slideshowMain's current value
-slidesshowNavPrev.setInitialSlide(
+// Set up the current slide values for the navigation elements, which are based on the slideshowMain's current value
+slideshowNavPrev.setInitialSlide(
   slideshowMain.current
     ? slideshowMain.current - 1
     : slideshowMain.slidesTotal - 1
@@ -78,6 +72,41 @@ slideshowNavNext.setInitialSlide(
     ? slideshowMain.current + 1
     : 0
 );
-console.log(titleElems);
+
 // Set initial title
 gsap.set(titleElems[slideshowMain.current], { opacity: 1 });
+
+// Change slides for the three slideshows
+const onClickNavCtrlEv = dir => {
+  if (slideshowMain.isAnimating) return;
+
+  // Slide out current title
+  gsap.to(titleElems[slideshowMain.current], {
+    duration: slideshowMain.duration / 2,
+    ease: 'power3.in',
+    y: dir === 'next' ? '-100%' : '100%',
+    opacity: 0,
+  });
+
+  slideshowMain[dir]();
+  slideshowNavPrev[dir]();
+  slideshowNavNext[dir]();
+  animateBodyBGColor();
+
+  // Slide in the new (current) title
+  gsap.to(titleElems[slideshowMain.current], {
+    duration: slideshowMain.duration / 2,
+    ease: 'power3',
+    startAt: { y: dir === 'next' ? '100%' : '-100%' },
+    y: '0%',
+    opacity: 1,
+    delay: slideshowMain.duration / 2,
+  });
+};
+navCtrls.prev.addEventListener('click', () => onClickNavCtrlEv('prev'));
+navCtrls.next.addEventListener('click', () => onClickNavCtrlEv('next'));
+
+// Preload images then remove loader (loading class)
+preloadImages('.slides__img-inner').then(() =>
+  document.body.classList.remove('loading')
+);
